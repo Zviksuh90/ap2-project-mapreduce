@@ -49,7 +49,7 @@ public class ClosestDriver implements InterfaceDriver {
 		FileInputFormat.setInputPaths(job, new Path(inputPath));
 
 		// saving output path and outputing
-		output = new Path(outputPath+JOBNAME);
+		output = new Path(outputPath+"/"+JOBNAME);
 		FileOutputFormat.setOutputPath(job, output);
 
 		// run job

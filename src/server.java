@@ -9,10 +9,11 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class server {
+import org.apache.commons.io.FileUtils;
 
+public class server {
+	
 	private static final int SOME_PORT = 12344;
-	private static int COUNT = 0;
 
 	static class ServerThread implements Runnable {
 		Socket client = null;
@@ -22,19 +23,16 @@ public class server {
 		}
 
 		public void run() {
-			COUNT++;
-			int count= COUNT;
 			try (BufferedReader inFromClient = new BufferedReader(
 					new InputStreamReader(client.getInputStream()));
 					DataOutputStream outToClient = new DataOutputStream(
 							client.getOutputStream());) {
-				
+
 				String inputLine = new String();
 
 				String inputPath = new String();
-				
 
-				inputPath = "./input" + Integer.toString(count);
+				inputPath = "./input";
 				File theDir = new File(inputPath);
 
 				// if the directory does not exist, create it
@@ -50,23 +48,21 @@ public class server {
 					}
 				}
 
-				
-
 				BufferedWriter writer = new BufferedWriter(new FileWriter(
-						new File(inputPath + "/input" + Integer.toString(count)
-								+ ".txt")));
+						new File(inputPath + "/input" + ".txt")));
 
-				inputLine = inFromClient.readLine();
-				writer.write(inputLine);
-
+				while (inputLine != null) {
+					inputLine = inFromClient.readLine();
+					writer.write(inputLine);
+				}
 				writer.close();
 				String args[] = { inputPath, inputPath };
 				// doing mapreduce
 				Driver.drive(args);
 
 				// returning to client results
-				BufferedReader br = new BufferedReader(new FileReader(inputPath+
-						"/closest_results/part-r-00000"));
+				BufferedReader br = new BufferedReader(new FileReader(inputPath
+						+ "/closest_results/part-r-00000"));
 				try {
 
 					String line = br.readLine();
@@ -74,7 +70,7 @@ public class server {
 				} finally {
 					br.close();
 				}
-
+				FileUtils.deleteDirectory(new File("./input"));
 			} catch (Exception e) {
 			} finally {
 				try {

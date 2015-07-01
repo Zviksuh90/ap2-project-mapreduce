@@ -84,11 +84,14 @@ public class Driver {
 		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 
 		String strLine = br.readLine();
+		if(strLine!=null){
 		StringTokenizer tokenizer = new StringTokenizer(strLine);
 		tokenizer.nextToken();
 		// initialize score
 		INPUT_SCORE=Long.parseLong(tokenizer.nextToken());		
-		
+		}else{
+			INPUT_SCORE=1000;
+		}
 		// Close the input stream
 		br.close();
 
@@ -99,7 +102,6 @@ public class Driver {
 		 j2.doJob("./movies/score_driver_data",args[1]);
 
 		 
-		// finishing up
 
 	}
 }
