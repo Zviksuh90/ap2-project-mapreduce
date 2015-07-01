@@ -31,7 +31,7 @@ public class ClosestReducer extends Reducer<Text, Text, Text, Text> {
 		Collections.sort(list,new EntryComparator());
 		int positive=0;
 		int negative=0;
-		for(int i=0;i<10;i++){
+		for(int i=0;i<3;i++){
 			if(list.get(i).getKey().contains("pos")){
 				positive++;
 			}else{
@@ -39,7 +39,7 @@ public class ClosestReducer extends Reducer<Text, Text, Text, Text> {
 			}
 		}
 		if(negative==positive){
-			for(int i=10;i<20;i++){
+			for(int i=3;i<5;i++){
 				if(list.get(i).getKey().contains("pos")){
 					positive++;
 				}else{

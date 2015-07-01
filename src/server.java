@@ -13,7 +13,7 @@ import org.apache.commons.io.FileUtils;
 
 public class server {
 	
-	private static final int SOME_PORT = 12344;
+	private static final int SOME_PORT = 12345;
 
 	static class ServerThread implements Runnable {
 		Socket client = null;
@@ -51,10 +51,10 @@ public class server {
 				BufferedWriter writer = new BufferedWriter(new FileWriter(
 						new File(inputPath + "/input" + ".txt")));
 
-				while (inputLine != null) {
+				
 					inputLine = inFromClient.readLine();
 					writer.write(inputLine);
-				}
+				
 				writer.close();
 				String args[] = { inputPath, inputPath };
 				// doing mapreduce
